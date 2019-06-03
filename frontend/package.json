@@ -1,0 +1,45 @@
+{
+  "name": "nexus",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:8000",
+  "scripts": {
+    "tailwind:css": "tailwind build src/styles/tailwind.src.css -c  tailwind.js -o src/styles/tailwind.css",
+    "start": "npm run tailwind:css && react-scripts start",
+    "build": "npm run tailwind:css && react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "dependencies": {
+    "bloomer": "^0.6.5",
+    "bulma": "^0.7.5",
+    "react": "16.8.6",
+    "react-alert": "^5.5.0",
+    "react-alert-template-basic": "^1.0.0",
+    "react-dom": "16.8.6",
+    "react-redux": "^7.0.3",
+    "react-scripts": "2.1.8",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "axios": "0.18.0",
+    "node-sass": "^4.12.0",
+    "raven-js": "3.27.0",
+    "tailwindcss": "^1.0.3"
+  },
+  "engines": {
+    "node": ">=9.11.1",
+    "npm": ">=5.6.0",
+    "yarn": ">=1.6.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

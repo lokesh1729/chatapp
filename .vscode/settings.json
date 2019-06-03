@@ -1,0 +1,11 @@
+{
+  "python.pythonPath": "venv/bin/python",
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "/Users/slokesh/.pyenv/shims/black",
+  "editor.formatOnSave": true,
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.jediEnabled": false,
+  "terminal.integrated.shell.osx": "/usr/local/bin/fish",
+  "python.terminal.activateEnvironment": true
+}
