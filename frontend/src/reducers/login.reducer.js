@@ -1,7 +1,10 @@
 import * as types from "../actions/types";
 
 const initialState = {
-    isAuthenticated: false,
+    isAuthenticated:
+        localStorage.getItem("authToken") !== "undefined" &&
+        !!localStorage.getItem("authToken"),
+    isLoading: false,
 };
 
 const loginReducer = function(state = initialState, action) {
@@ -12,6 +15,16 @@ const loginReducer = function(state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: true,
+            };
+        case types.HTTP_CALL_INITIATED:
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case types.HTTP_CALL_COMPLETED:
+            return {
+                ...state,
+                isLoading: false,
             };
         default:
             return state;

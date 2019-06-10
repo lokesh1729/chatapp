@@ -1,1 +1,14 @@
 @import "constants";
+
+.spinner {
+    opacity: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.spinner>img {
+    position: absolute;
+    top: 25%;
+    left: 40%;
+}

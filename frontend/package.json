@@ -2,7 +2,6 @@
   "name": "nexus",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8000",
   "scripts": {
     "tailwind:css": "tailwind build src/styles/tailwind.src.css -c  tailwind.js -o src/styles/tailwind.css",
     "start": "npm run tailwind:css && react-scripts start",
@@ -16,12 +15,16 @@
   "dependencies": {
     "bloomer": "^0.6.5",
     "bulma": "^0.7.5",
+    "http-proxy-middleware": "^0.19.1",
     "react": "16.8.6",
     "react-alert": "^5.5.0",
     "react-alert-template-basic": "^1.0.0",
     "react-dom": "16.8.6",
     "react-redux": "^7.0.3",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "2.1.8",
+    "react-transition-group": "^4.1.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
@@ -29,6 +32,7 @@
     "axios": "0.18.0",
     "node-sass": "^4.12.0",
     "raven-js": "3.27.0",
+    "redux-devtools-extension": "^2.13.8",
     "tailwindcss": "^1.0.3"
   },
   "engines": {

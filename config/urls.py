@@ -28,11 +28,11 @@ urlpatterns = [
     # User management
     path("users/", include("chatapp.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
-    path("auth/login/", AuthLoginView.as_view(), name="auth_login"),
-    path("auth/register/", AuthRegisterView.as_view(), name="auth_register"),
-    path("auth/details/", AuthDetailsView.as_view(), name="auth_details"),
+    path("api/auth/login/", AuthLoginView.as_view(), name="auth_login"),
+    path("api/auth/register/", AuthRegisterView.as_view(), name="auth_register"),
+    path("api/auth/details/", AuthDetailsView.as_view(), name="auth_details"),
     path(
-        "auth/", include(("knox.urls", "knox"), namespace="api_auth"), name="api_auth"
+        "api/auth/", include(("knox.urls", "knox"), namespace="api_auth"), name="api_auth"
     ),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

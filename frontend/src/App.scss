@@ -1,2 +1,4 @@
-@import "styles/_styles.scss";
-@import "../node_modules/bulma/css/bulma.css";
+@import "styles/styles";
+$primary: $primary;
+@import "../node_modules/bulma/sass/utilities/_all";
+@import "../node_modules/bulma/bulma";

@@ -10,21 +10,36 @@ export const login = (username, password) => (dispatch) => {
         },
     };
     const body = JSON.stringify({ username, password });
-
+    dispatch({
+        type: types.HTTP_CALL_INITIATED,
+    });
     axios
-        .post("/auth/login/", body, config)
+        .post("/api/auth/login/", body, config)
         .then((user) => {
-            dispatch(
-                createMessages(types.MESSAGE, {
-                    loginSuccess: "logged in successfully",
-                }),
-            );
+            console.log(user);
+            if (user.status === 200) {
+                dispatch({
+                    type: types.LOGIN,
+                    payload: user.data,
+                });
+                dispatch(
+                    createMessages(types.MESSAGE, {
+                        loginSuccess: "logged in successfully",
+                    }),
+                );
+            } else {
+                dispatch(
+                    createErrors(types.ERROR, user.statusText, user.status),
+                );
+            }
             dispatch({
-                type: types.LOGIN,
-                payload: user,
+                type: types.HTTP_CALL_COMPLETED,
             });
         })
         .catch((err) => {
+            dispatch({
+                type: types.HTTP_CALL_COMPLETED,
+            });
             dispatch(
                 createErrors(
                     types.ERROR,
