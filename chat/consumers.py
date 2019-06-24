@@ -5,15 +5,27 @@ import uuid
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
-        print("connected")
+        self.user = self.scope["user"]
+        print(self.user)
         self.accept()
 
     def disconnect(self, code):
         print("disconnect code %s" % code)
 
     def receive(self, text_data=None, bytes_data=None):
-        print("received message")
-        text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
+        try:
+            text_data_json = json.loads(text_data)
+            message = text_data_json["message"]
+            self.send(
+                text_data=json.dumps(
+                    {
+                        "message": message,
+                        "key": str(uuid.uuid4()),
+                        "username": self.user.username,
+                    }
+                )
+            )
+        except Exception:
+            import traceback
 
-        self.send(text_data=json.dumps({"message": message, "key": str(uuid.uuid4())}))
+            traceback.print_exc()

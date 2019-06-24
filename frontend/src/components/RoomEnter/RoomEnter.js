@@ -21,6 +21,11 @@ class RoomEnter extends Component {
         let val = event.target.value;
         this.setState((_) => ({ roomName: val }));
     };
+    keyDownHandler = (event) => {
+        if (event.keyCode === 13) {
+            this.enterRoom(event);
+        }
+    };
     render() {
         return (
             <Section className="room_enter__section">
@@ -30,6 +35,7 @@ class RoomEnter extends Component {
                         type={"text"}
                         className="room__input"
                         onChange={this.roomNameChange}
+                        onKeyDown={this.keyDownHandler}
                     />
                     <Button
                         isColor={"primary"}

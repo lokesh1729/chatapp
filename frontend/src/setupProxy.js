@@ -5,7 +5,6 @@ module.exports = function(app) {
         target: "ws://localhost:5000",
         changeOrigin: true,
         ws: true,
-        // headers: { token: process.ENV.WS_TOKEN },
         secure: false,
     });
     app.use(proxy("/api", { target: "http://localhost:5000/" }));
