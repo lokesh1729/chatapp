@@ -57,3 +57,4 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+SHELL_PLUS_PRINT_SQL = True

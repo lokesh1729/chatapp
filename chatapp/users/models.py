@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField, DateTimeField
+from django.db.models import CharField, DateTimeField, ForeignKey, CASCADE
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework import exceptions
 from django.contrib.auth import get_user_model, authenticate
 
 USER = get_user_model()
@@ -11,13 +12,16 @@ class RegisterSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}, "email": {"required": False}}
 
     def create(self, validated_data):
-        user = USER.objects.create_user(
-            validated_data["username"],
-            validated_data.get("email"),
-            validated_data["password"],
-            first_name=validated_data.get("first_name"),
-            last_name=validated_data.get("last_name"),
-        )
+        try:
+            user = USER.objects.create_user(
+                validated_data["username"],
+                validated_data.get("email"),
+                validated_data["password"],
+                first_name=validated_data["first_name"],
+                last_name=validated_data["last_name"],
+            )
+        except KeyError as exc:
+            raise exceptions.ValidationError("Missing %s in request body" % exc)
 
         return user
 
