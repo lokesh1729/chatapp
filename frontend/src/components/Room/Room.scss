@@ -8,64 +8,7 @@
     color: #0F1A26;
 }
 
-.input__container {
-    top: 72%;
-}
-
-@media screen and (max-width: 500px) and (max-height: 300px) {
-    .input__container {
-        top: 50%;
-    }
-
-    .textarea:not([rows]) {
-        min-height: 45px;
-    }
-}
-
-@media screen and (max-width: 500px) and (min-height: 300px) and (max-height: 480px) {
-    .input__container {
-        top: 60%;
-    }
-
-    .textarea:not([rows]) {
-        min-height: 36px;
-    }
-}
-
-@media screen and (max-width: 500px) and (min-height: 480px) and (max-height: 760px) {
-    .input__container {
-        top: 72%;
-    }
-
-    .textarea:not([rows]) {
-        min-height: 45px;
-    }
-}
-
-@media screen and (max-width: 500px) and (min-height: 760px) and (max-height: 1024px) {
-    .input__container {
-        top: 84%;
-    }
-
-    .textarea:not([rows]) {
-        min-height: 45px;
-    }
-}
-
-@media screen and (max-width: 500px) and (min-height: 1025px) {
-    .input__container {
-        top: 90%;
-    }
-
-    .textarea:not([rows]) {
-        min-height: 45px;
-    }
-}
-
-.chat_log {
-    width: 75%;
-}
-
-.user_list {
-    width: 25%;
+.chat_log__flex{
+  height: 67%;
+  overflow: scroll;
 }
