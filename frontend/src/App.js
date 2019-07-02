@@ -5,6 +5,7 @@ import AlertTemplate from "react-alert-template-basic";
 import "./App.scss";
 import Alerts from "./components/common/Alerts";
 import { Provider } from "react-redux";
+import { CookiesProvider } from 'react-cookie';
 import store from "./store";
 import Spinner from "./components/common/Spinner";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -35,16 +36,18 @@ class App extends Component {
     render() {
         return (
             <Provider store={store}>
-                <AlertProvider template={AlertTemplate} {...options}>
-                    <BrowserRouter>
-                        <Switch>
-                            <Route path={"/"} exact component={Home} />
-                            <Route path={"/login"} component={WrappedLogin} />
-                            <Route path={"/room"} exact component={RoomEnter} />
-                            <Route path={"/room/:roomName"} component={Room} />
-                        </Switch>
-                    </BrowserRouter>
-                </AlertProvider>
+                <CookiesProvider>
+                  <AlertProvider template={AlertTemplate} {...options}>
+                      <BrowserRouter>
+                          <Switch>
+                              <Route path={"/"} exact component={Home} />
+                              <Route path={"/login"} component={WrappedLogin} />
+                              <Route path={"/room"} exact component={RoomEnter} />
+                              <Route path={"/room/:roomName"} component={Room} />
+                          </Switch>
+                      </BrowserRouter>
+                  </AlertProvider>
+                </CookiesProvider>
             </Provider>
         );
     }

@@ -5,11 +5,10 @@ const initialState = {
     status: "",
 };
 const errorReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case types.ERROR:
-            return { msg: action.payload.msg, status: action.payload.status };
-        default:
-            return state;
+    if (action.type === types.ERROR) {
+        return { msg: action.payload.msg, status: action.payload.status };
+    } else {
+        return state;
     }
 };
 export default errorReducer;

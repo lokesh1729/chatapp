@@ -1,9 +1,8 @@
 import * as types from "../actions/types";
+const Cookies = require("js-cookie");
 
 const initialState = {
-    isAuthenticated:
-        localStorage.getItem("authToken") !== "undefined" &&
-        !!localStorage.getItem("authToken"),
+    isAuthenticated: !!Cookies.get("authToken"),
     isLoading: false,
 };
 
@@ -11,7 +10,7 @@ const loginReducer = function(state = initialState, action) {
     switch (action.type) {
         case types.LOGIN:
             let token = action.payload.token;
-            localStorage.setItem("authToken", token);
+            Cookies.set("authToken", token, {path: "/", expires: new Date(action.payload.expiry)});
             return {
                 ...state,
                 isAuthenticated: true,

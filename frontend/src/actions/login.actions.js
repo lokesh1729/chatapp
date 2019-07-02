@@ -15,12 +15,12 @@ export const login = (username, password) => (dispatch) => {
     });
     axios
         .post("/api/auth/login/", body, config)
-        .then((user) => {
-            console.log(user);
-            if (user.status === 200) {
+        .then((response) => {
+            // console.log(response);
+            if (response.status === 200) {
                 dispatch({
                     type: types.LOGIN,
-                    payload: user.data,
+                    payload: response.data,
                 });
                 dispatch(
                     createMessages(types.MESSAGE, {
@@ -29,7 +29,7 @@ export const login = (username, password) => (dispatch) => {
                 );
             } else {
                 dispatch(
-                    createErrors(types.ERROR, user.statusText, user.status),
+                    createErrors(types.ERROR, response.statusText, response.status),
                 );
             }
             dispatch({
@@ -40,13 +40,17 @@ export const login = (username, password) => (dispatch) => {
             dispatch({
                 type: types.HTTP_CALL_COMPLETED,
             });
-            dispatch(
-                createErrors(
+            if(err.response) {
+                dispatch(
+                  createErrors(
                     types.ERROR,
                     err.response.data,
                     err.response.status,
-                ),
-            );
+                  ),
+                );
+            }
+            console.log(err);
+            dispatch(createErrors(types.ERROR, err.message, 500));
         })
         .catch((err) =>
             dispatch(
