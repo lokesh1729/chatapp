@@ -13,6 +13,7 @@
     "extends": "react-app"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "bloomer": "^0.6.5",
     "bulma": "^0.7.5",
     "http-proxy-middleware": "^0.19.1",
@@ -31,12 +32,11 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "axios": "0.18.0",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^5.0.0",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-react": "^7.14.1",
-    "lint-staged": "^8.2.1",
+    "lint-staged": "^9.0.2",
     "node-sass": "^4.12.0",
     "prettier": "^1.18.2",
     "raven-js": "3.27.0",
