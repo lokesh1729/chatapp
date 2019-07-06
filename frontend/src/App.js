@@ -38,7 +38,7 @@ class App extends Component {
             <Provider store={store}>
                 <CookiesProvider>
                   <AlertProvider template={AlertTemplate} {...options}>
-                      <BrowserRouter>
+                      <BrowserRouter basename={"/app"}>
                           <Switch>
                               <Route path={"/"} exact component={Home} />
                               <Route path={"/login"} component={WrappedLogin} />

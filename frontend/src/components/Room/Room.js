@@ -61,30 +61,31 @@ class Room extends Component {
         console.log(err.response.statusText, err.response.statusMessage);
       }
     })
-
   }
+
   sendMessage = e => {
     e.preventDefault();
     this.state.socket.send(JSON.stringify({ message: this.state.message, room_name: this.state.roomName }));
     this.setState(_ => ({ message: "" }));
   };
+
   keyDownHandler = event => {
     if (event.keyCode === 13) {
       this.sendMessage(event);
     }
   };
+
   render() {
     const chatlog = this.state.chatLog;
     return (
       <Section className="bg-purple-400 h-screen">
         <Container className="h-full">
           <div className="flex flex-col h-full">
-            <div className="text-3xl text-center flex-auto room__name">
+            <div className="text-3xl text-center flex-auto room__name w-full border-solid border-2 border-white-500 flex-auto">
               Room Name : {this.props.match.params.roomName}
             </div>
-            <div className="w-full border-solid border border-white-500 flex-auto" />
-            <div className="chat_log__flex flex-auto flex flex-row">
-              <div className="chat_log w-9/12">
+            <div className="chat_log__flex flex-auto flex flex-row w-full border-solid border-2 border-t-0 border-white-500 flex-auto">
+              <div className="chat_log w-9/12 border-solid border-r-2 border-white-500 flex-auto">
                 {chatlog.map(message => (
                   <div key={message.key}>
                     <span className="message__username text-white">{message.username}</span> :{" "}
@@ -92,7 +93,6 @@ class Room extends Component {
                   </div>
                 ))}
               </div>
-              <div className="border-solid border-r-2 border-white-500 flex-auto" />
               <div className="user_list w-3/12">
                 <ul>
                   <li className="text-center has-text-info">user1</li>
@@ -102,7 +102,6 @@ class Room extends Component {
                 </ul>
               </div>
             </div>
-            <div className="w-full border-solid border border-white-500 flex-auto" />
             <Container className="mt-4">
               <Field>
                 <TextArea
