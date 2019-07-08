@@ -20,6 +20,7 @@ django-redis  # https://github.com/niwinz/django-redis
 djangorestframework  # https://github.com/encode/django-rest-framework
 coreapi  # https://github.com/core-api/python-client
 channels
+django-rest-knox
 
 
 # Django/ReactJS integration
