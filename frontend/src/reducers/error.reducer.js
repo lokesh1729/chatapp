@@ -7,8 +7,7 @@ const initialState = {
 const errorReducer = (state = initialState, action) => {
     if (action.type === types.ERROR) {
         return { msg: action.payload.msg, status: action.payload.status };
-    } else {
-        return state;
     }
+    return state;
 };
 export default errorReducer;
