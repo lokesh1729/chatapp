@@ -3,6 +3,7 @@ import { instanceOf } from 'prop-types';
 import { connect } from "react-redux";
 import { withCookies, Cookies } from 'react-cookie';
 import { Redirect } from "react-router-dom";
+import { trimBasename } from "../../utils";
 
 export default function authRequired(WrappedComponent) {
     const innerClass = class extends React.Component {
@@ -14,7 +15,7 @@ export default function authRequired(WrappedComponent) {
             return (
                 <Fragment>
                     {!isAuthenticated ? (
-                        <Redirect to={"/login"} />
+                        <Redirect to={`/login?next=${encodeURIComponent(trimBasename(this.props.location.pathname + this.props.location.search))}`} />
                     ) : (
                         <WrappedComponent {...this.props} />
                     )}

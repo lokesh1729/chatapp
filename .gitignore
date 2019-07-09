@@ -342,3 +342,4 @@ chatapp/media/
 
 .env
 .envs/*
+index.dev.html

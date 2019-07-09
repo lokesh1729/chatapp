@@ -1,3 +1,4 @@
+import queryString from 'query-string'
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -26,8 +27,11 @@ class Login extends Component {
     //     console.log(`Login component CDM : ${JSON.stringify(this.props)}`);
     // }
 
-    // componentDidUpdate(prevProps, _) {
-    //     console.log(`Login componenet CDU : ${JSON.stringify(prevProps)}`);
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     console.log(`Login Component prevProps : ${JSON.stringify(prevProps)}`);
+    //     console.log(`Login Component prevState : ${JSON.stringify(prevState)}`);
+    //     console.log(`Login Component props : ${JSON.stringify(this.props)}`);
+    //     console.log(`Login Component state : ${JSON.stringify(this.state)}`);
     // }
 
     // componentWillUnmount() {
@@ -38,16 +42,19 @@ class Login extends Component {
         e.preventDefault();
         this.props.login(this.state.username, this.state.password);
     };
+
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     };
+
     render() {
-        // console.log(`Login Render...`);
         const isAuthenticated = this.props.state.isAuthenticated;
+        const queryParams = queryString.parse(this.props.location.search);
+        const next = queryParams.next;
         return (
             <Fragment>
                 {isAuthenticated ? (
-                    <Redirect to={"/room"} />
+                    <Redirect to={next} />
                 ) : (
                     <Section
                         className={

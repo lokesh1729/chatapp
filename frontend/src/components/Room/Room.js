@@ -32,14 +32,15 @@ class Room extends Component {
       console.log("opened connection...");
     };
     socket.onmessage = function receiveMessage(e) {
-      console.log(`message received : ${e.data}`);
+      // console.log(`message received : ${e.data}`);
       let data = JSON.parse(e.data);
       self.setState(prevState => ({
         chatLog: [...prevState.chatLog, data],
       }));
     };
     socket.onerror = err => {
-      console.log(`socket connection closed unexcpectedly ${err}`);
+      console.log(`socket connection closed unexcpectedly`);
+      console.error(err);
     };
     socket.onclose = e => {
       console.log("closing connection...");

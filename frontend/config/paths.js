@@ -73,6 +73,7 @@ module.exports = {
   appStaticBuild: resolveApp('build/static'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
+  appDevHtml: resolveApp('public/index.dev.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
