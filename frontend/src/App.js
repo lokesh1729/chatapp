@@ -12,6 +12,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./components/Home/home";
 import RoomEnter from "./components/RoomEnter/RoomEnter";
 import Room from "./components/Room/Room";
+import {BASE_NAME} from "./constants";
 
 const options = {
     // you can also just use 'bottom center'
@@ -38,7 +39,7 @@ class App extends Component {
             <Provider store={store}>
                 <CookiesProvider>
                   <AlertProvider template={AlertTemplate} {...options}>
-                      <BrowserRouter basename={"/app"}>
+                      <BrowserRouter basename={BASE_NAME}>
                           <Switch>
                               <Route path={"/"} exact component={Home} />
                               <Route path={"/login"} component={WrappedLogin} />
