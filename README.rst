@@ -1,9 +1,11 @@
-chatapp project
+=============
+ChatApp
+=============
 
-===============
 
 this is a chat application built using django, django channels and react.
-For now, there's nothing new compared to other chat apps, this is a fun project to learn how chat apps are implemented.
+For now, there's nothing new compared to other chat apps, this is a fun project
+to learn myself how chat apps are implemented.
 
 this project was generated using `fork of a cookiecutter <https://github.com/chopdgd/cookiecutter-django-reactjs>`_
 
@@ -18,9 +20,11 @@ implementation details are:
     * on frontend using `react-router` for client side navigation, `redux` for single state source, `axios` for making `HTTP` calls
 
 
-Features:
-    * logged in users can join/create a chat room they want
-    * users can send message to the room
+Features
+--------
+
+* logged in users can join/create a chat room they want
+* users can send message to the room
 
 Work In Progress:
-    * users can see who is online/offline
+please refer this `link <https://github.com/lokesh1729/chatapp/projects/1#column-5874429>`_
