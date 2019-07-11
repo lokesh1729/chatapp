@@ -79,27 +79,28 @@ class Room extends Component {
   render() {
     const chatlog = this.state.chatLog;
     return (
-      <Section className="bg-purple-400 h-screen">
+      <Section className="bg-purple-800 h-screen">
         <Container className="h-full">
           <div className="flex flex-col h-full">
-            <div className="text-3xl text-center flex-auto room__name w-full border-solid border-2 border-white-500 flex-auto">
+            <div className="text-3xl text-center p-2 flex-auto room__name w-full border-solid border-2 border-white-500 flex-auto">
               Room Name : {this.props.match.params.roomName}
             </div>
             <div className="chat_log__flex flex-auto flex flex-row w-full border-solid border-2 border-t-0 border-white-500 flex-auto">
-              <div className="chat_log w-9/12 border-solid border-r-2 border-white-500 flex-auto">
+              <div className="chat_log w-10/12 p-2 border-solid border-r-2 border-white-500 flex-auto flex flex-col overflow-y-scroll">
                 {chatlog.map(message => (
-                  <div key={message.key}>
-                    <span className="message__username text-white">{message.username}</span> :{" "}
+                  <div key={message.key} className="p-1">
+                    <span className="message__username has-text-primary">{message.username}</span> :{" "}
                     <span className="message__message break-words">{message.message}</span>
                   </div>
                 ))}
               </div>
-              <div className="user_list w-3/12">
+              <div className="user_list w-2/12 flex-auto flex flex-col">
+                <span className="has-text-primary text-center">Online Users</span>
                 <ul>
-                  <li className="text-center has-text-info">user1</li>
-                  <li className="text-center has-text-info">user2</li>
-                  <li className="text-center has-text-info">user3</li>
-                  <li className="text-center has-text-info">user4</li>
+                  <li className="text-center has-text-primary">user1</li>
+                  <li className="text-center has-text-primary">user2</li>
+                  <li className="text-center has-text-primary">user3</li>
+                  <li className="text-center has-text-primary">user4</li>
                 </ul>
               </div>
             </div>
@@ -122,7 +123,7 @@ class Room extends Component {
               <Field>
                 <Control>
                   <Button isColor="primary" onClick={this.sendMessage}>
-                    Submit
+                    <span className="has-text-info"> Submit </span>
                   </Button>
                 </Control>
               </Field>
