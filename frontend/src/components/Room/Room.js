@@ -8,6 +8,9 @@ import { Control } from "bloomer/lib/elements/Form/Control";
 import { Button } from "bloomer/lib/elements/Button";
 import "./Room.scss";
 import { TextArea } from "bloomer/lib/elements/Form/TextArea";
+import { connect } from "react-redux";
+import {alert} from "../../actions/message.actions";
+import PropTypes from "prop-types";
 
 class Room extends Component {
   constructor(props) {
@@ -66,6 +69,10 @@ class Room extends Component {
 
   sendMessage = e => {
     e.preventDefault();
+    if(!this.state.message) {
+      this.props.alert("ERROR", {emptyMessage: "please enter a message"});
+      return;
+    }
     this.state.socket.send(JSON.stringify({ message: this.state.message, room_name: this.state.roomName }));
     this.setState(_ => ({ message: "" }));
   };
@@ -89,7 +96,7 @@ class Room extends Component {
               <div className="chat_log w-10/12 p-2 border-solid border-r-2 border-white-500 flex-auto flex flex-col overflow-y-scroll">
                 {chatlog.map(message => (
                   <div key={message.key} className="p-1">
-                    <span className="message__username has-text-primary">{message.username}</span> :{" "}
+                    <span className="message__username has-text-primary">{message.username} : </span>
                     <span className="message__message break-words">{message.message}</span>
                   </div>
                 ))}
@@ -135,4 +142,8 @@ class Room extends Component {
   }
 }
 
-export default authRequired(Room);
+Room.propTypes = {
+  alert: PropTypes.func.isRequired
+};
+
+export default connect(null, {alert})(authRequired(Room));
