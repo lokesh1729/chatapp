@@ -89,7 +89,7 @@ class Login extends Component {
                                 </Field>
                                 <Field>
                                     <Control>
-                                        <Button isColor="primary" type="submit">
+                                        <Button isColor="info" type="submit">
                                             Submit
                                         </Button>
                                     </Control>

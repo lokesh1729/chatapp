@@ -4,11 +4,9 @@ const initialState = {
     msg: {},
 };
 const messageReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case types.MESSAGE:
-            return (state = action.payload);
-        default:
-            return state;
+    if (action.type === types.MESSAGE) {
+        return (state = action.payload);
     }
+    return state;
 };
 export default messageReducer;

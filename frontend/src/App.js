@@ -33,6 +33,15 @@ const WrappedLogin = (props) => {
     );
 };
 
+const WrappedRoom = (props) => {
+  return (
+    <Fragment>
+      <Alerts/>
+      <Room {...props} />
+    </Fragment>
+  )
+};
+
 class App extends Component {
     render() {
         return (
@@ -44,7 +53,7 @@ class App extends Component {
                               <Route path={"/"} exact component={Home} />
                               <Route path={"/login"} component={WrappedLogin} />
                               <Route path={"/room"} exact component={RoomEnter} />
-                              <Route path={"/room/:roomName"} component={Room} />
+                              <Route path={"/room/:roomName"} component={WrappedRoom} />
                           </Switch>
                       </BrowserRouter>
                   </AlertProvider>

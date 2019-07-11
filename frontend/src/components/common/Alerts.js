@@ -17,10 +17,15 @@ class Alerts extends Component {
                     `${errors.status} : ${errors.msg.non_field_errors.join()}`,
                 );
             if (errors.msg.username) alert.error(errors.msg.username.join());
+            if(errors.msg.emptyMessage) alert.error(errors.msg.emptyMessage);
+            if(errors.msg.error) alert.error(errors.msg.error);
         }
         if (messages !== prevProps.messages) {
             if (messages.loginSuccess) {
                 alert.success(messages.loginSuccess);
+            }
+            if(messages.success) {
+                alert.success(messages.success);
             }
         }
     }
