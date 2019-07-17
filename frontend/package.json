@@ -84,6 +84,7 @@
     "workbox-webpack-plugin": "4.2.0"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^1.2.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^6.0.0",
     "lint-staged": "^9.0.2",

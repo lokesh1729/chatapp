@@ -1,6 +1,5 @@
 import axios from "axios";
 import * as types from "./types";
-import * as constants from "./constants";
 import { createErrors, createMessages } from "./error.actions";
 
 export const login = (username, password) => (dispatch) => {
@@ -41,7 +40,7 @@ export const login = (username, password) => (dispatch) => {
                 type: types.HTTP_CALL_COMPLETED,
             });
             if(err.response) {
-                dispatch(
+                return dispatch(
                   createErrors(
                     types.ERROR,
                     err.response.data,
@@ -50,14 +49,14 @@ export const login = (username, password) => (dispatch) => {
                 );
             }
             console.log(err);
-            dispatch(createErrors(types.ERROR, err.message, 500));
+            return dispatch(createErrors(types.ERROR, err.message, 500));
         })
         .catch((err) =>
             dispatch(
                 createErrors(
                     types.ERROR,
-                    constants.GENERIC_ERROR_MESSAGE,
-                    err.response.status,
+                    err,
+                    500,
                 ),
             ),
         );
