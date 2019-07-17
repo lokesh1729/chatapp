@@ -3,6 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .serializers import MessageSerializer
+from chatapp.users import serializers as user_serializers
+from chatapp.users import models as user_models
 from .models import Message
 from rest_framework.permissions import IsAuthenticated
 
@@ -34,3 +36,13 @@ class MessageViewset(viewsets.ModelViewSet):
                 instance
             )
             return Response(response.data, status=status.HTTP_200_OK)
+
+
+class SecurityQuestionViewset(viewsets.ModelViewSet):
+    serializer_class = user_serializers.SecurityQuestionSerializer
+    queryset = user_models.SecurityQuestion
+
+
+class SecurityAnswerViewset(viewsets.ModelViewSet):
+    serializer_class = user_serializers.SecurityAnswerSerializer
+    queryset = user_models.SecurityAnswer

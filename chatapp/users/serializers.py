@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework import exceptions
 from django.contrib.auth import get_user_model, authenticate
-
+from .models import SecurityAnswer, SecurityQuestion
 USER = get_user_model()
 
 
@@ -42,3 +42,17 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Invalid username and password")
+
+
+class SecurityQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SecurityQuestion
+        fields = ("id", "user", "question")
+        extra_kwargs = {"id": {"required": False}}
+
+
+class SecurityAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SecurityAnswer
+        fields = ("id", "user", "question", "answer")
+        extra_kwargs = {"id": {"required": False}, "answer": {"write_only": True}}

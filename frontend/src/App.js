@@ -23,6 +23,16 @@ const options = {
     transition: transitions.SCALE,
 };
 
+const WrappedSignup = (props) => {
+  return (
+    <Fragment>
+      <Spinner />
+      <Alerts />
+      <Signup {...props} />
+    </Fragment>
+  )
+}
+
 const WrappedLogin = (props) => {
     return (
         <Fragment>
@@ -54,6 +64,7 @@ class App extends Component {
                               <Route path={"/login"} component={WrappedLogin} />
                               <Route path={"/room"} exact component={RoomEnter} />
                               <Route path={"/room/:roomName"} component={WrappedRoom} />
+                              <Route path={"/signup"} component={WrappedSignup} />
                           </Switch>
                       </BrowserRouter>
                   </AlertProvider>
