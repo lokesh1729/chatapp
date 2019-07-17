@@ -16,7 +16,7 @@ class MessageViewset(viewsets.ModelViewSet):
         methods=["GET", "PUT", "POST", "DELETE"],
         detail=False,
         url_name="room-messages",
-        url_path="room/(" "?P<room_name>[" "a-zA-Z]+)",
+        url_path="room/(?P<room_name>[a-zA-Z]+)",
     )
     def room(self, request, room_name):
         if request.method == "GET":
