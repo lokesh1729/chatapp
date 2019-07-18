@@ -38,7 +38,11 @@ class Signup extends Component {
 
   render() {
     const isSignupSuccess = this.props.state.signupSuccess;
+    const isAuthenticated = this.props.state.isAuthenticated;
     const isPasswordMismatched = "passwordMismatch" in this.state.formErrors;
+    if(isAuthenticated) {
+        return <Redirect to={"/"} />
+    }
     return (
       <Fragment>
         {isSignupSuccess ? (<Redirect to={"/login/"}/>) :
