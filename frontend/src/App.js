@@ -13,6 +13,7 @@ import Home from "./components/Home/home";
 import RoomEnter from "./components/RoomEnter/RoomEnter";
 import Room from "./components/Room/Room";
 import {BASE_NAME} from "./constants";
+import Signup from "./components/Signup/signup";
 
 const options = {
     // you can also just use 'bottom center'
@@ -31,7 +32,7 @@ const WrappedSignup = (props) => {
       <Signup {...props} />
     </Fragment>
   )
-}
+};
 
 const WrappedLogin = (props) => {
     return (

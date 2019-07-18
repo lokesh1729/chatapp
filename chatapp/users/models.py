@@ -20,13 +20,13 @@ class User(AbstractUser):
 
 
 class SecurityQuestion(models.Model):
-    user = models.ManyToManyField(user_model_label, on_delete=models.CASCADE,
+    users = models.ManyToManyField(user_model_label,
                              related_name="security_questions",
                              related_query_name="security_question")
-    question = models.CharField(max_length=150, null=False, blank=False)
+    question = models.TextField(null=False, blank=False)
 
     def __unicode__(self):
-        return _("%s - %s") % (self.user, self.question)
+        return _("%s - %s") % (self.users, self.question)
 
 
 class SecurityAnswer(models.Model):

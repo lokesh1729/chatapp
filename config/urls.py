@@ -7,15 +7,12 @@ from django.views import defaults as default_views
 
 from rest_framework.routers import DefaultRouter
 from chatapp.users.views import AuthRegisterView, AuthDetailsView, AuthLoginView
-from chat.viewsets import MessageViewset, SecurityAnswerViewset, SecurityQuestionViewset
+from chat.viewsets import MessageViewset
 
 
 router = DefaultRouter()
 
 router.register("message", MessageViewset)
-router.register("security_questions", SecurityQuestionViewset)
-router.register("security_answers", SecurityAnswerViewset)
-
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     re_path(
