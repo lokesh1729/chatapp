@@ -13,6 +13,7 @@ import Home from "./components/Home/home";
 import RoomEnter from "./components/RoomEnter/RoomEnter";
 import Room from "./components/Room/Room";
 import {BASE_NAME} from "./constants";
+import Signup from "./components/Signup/signup";
 
 const options = {
     // you can also just use 'bottom center'
@@ -21,6 +22,16 @@ const options = {
     offset: "30px",
     // you can also just use 'scale'
     transition: transitions.SCALE,
+};
+
+const WrappedSignup = (props) => {
+  return (
+    <Fragment>
+      <Spinner />
+      <Alerts />
+      <Signup {...props} />
+    </Fragment>
+  )
 };
 
 const WrappedLogin = (props) => {
@@ -54,6 +65,7 @@ class App extends Component {
                               <Route path={"/login"} component={WrappedLogin} />
                               <Route path={"/room"} exact component={RoomEnter} />
                               <Route path={"/room/:roomName"} component={WrappedRoom} />
+                              <Route path={"/signup"} component={WrappedSignup} />
                           </Switch>
                       </BrowserRouter>
                   </AlertProvider>

@@ -13,7 +13,6 @@ from chat.viewsets import MessageViewset
 router = DefaultRouter()
 
 router.register("message", MessageViewset)
-
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     re_path(

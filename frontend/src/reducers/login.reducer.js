@@ -4,9 +4,10 @@ const Cookies = require("js-cookie");
 const initialState = {
     isAuthenticated: !!Cookies.get("authToken"),
     isLoading: false,
+    signupSuccess: false,
 };
 
-const loginReducer = function(state = initialState, action) {
+const loginSignupReducer = function(state = initialState, action) {
     switch (action.type) {
         case types.LOGIN:
             let token = action.payload.token;
@@ -14,6 +15,11 @@ const loginReducer = function(state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: true,
+            };
+        case types.SIGNUP:
+            return {
+                ...state,
+                signupSuccess: !state.signupSuccess
             };
         case types.HTTP_CALL_INITIATED:
             return {
@@ -29,4 +35,4 @@ const loginReducer = function(state = initialState, action) {
             return state;
     }
 };
-export default loginReducer;
+export default loginSignupReducer;
