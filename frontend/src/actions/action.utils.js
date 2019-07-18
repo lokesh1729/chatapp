@@ -2,7 +2,7 @@ import axios from "axios";
 import * as types from "./types";
 import { createErrors, createMessages } from "./error.actions";
 
-export const makeHttpCall = (url, body, successMsg, dispatch) => {
+export const makeHttpCall = (url, body, successMsg, action_type, dispatch) => {
   const config = {
         headers: {
             "Content-Type": "application/json",
@@ -12,24 +12,18 @@ export const makeHttpCall = (url, body, successMsg, dispatch) => {
         .post(url, body, config)
         .then((response) => {
             // console.log(response);
-            if (response.status === 200) {
-                dispatch({
-                    type: types.LOGIN,
-                    payload: response.data,
-                });
-                dispatch(
-                    createMessages(types.MESSAGE, {
-                        loginSuccess: successMsg,
-                    }),
-                );
-            } else {
-                dispatch(
-                    createErrors(types.ERROR, response.statusText, response.status),
-                );
-            }
             dispatch({
                 type: types.HTTP_CALL_COMPLETED,
             });
+            dispatch({
+                type: action_type,
+                payload: response.data,
+            });
+            dispatch(
+                createMessages(types.MESSAGE, {
+                    loginSuccess: successMsg,
+                }),
+            );
         })
         .catch((err) => {
             dispatch({
@@ -44,15 +38,11 @@ export const makeHttpCall = (url, body, successMsg, dispatch) => {
                   ),
                 );
             }
+            if(err.status && err.statusText) {
+              return dispatch(
+                    createErrors(types.ERROR, err.statusText, err.status),
+                );
+            }
             return dispatch(createErrors(types.ERROR, err.message, 500));
         })
-        .catch((err) =>
-            dispatch(
-                createErrors(
-                    types.ERROR,
-                    err,
-                    500,
-                ),
-            ),
-        );
 };

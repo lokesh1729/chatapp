@@ -15,5 +15,5 @@ export const signup = (username, password, first_name, last_name, security_quest
   dispatch({
         type: types.HTTP_CALL_INITIATED,
     });
-  makeHttpCall("/api/auth/register/", body, "signup successful. redirecting to login...", dispatch);
+  makeHttpCall("/api/auth/register/", body, "signup successful. please login now", types.SIGNUP, dispatch);
 };

@@ -18,14 +18,14 @@ class Alerts extends Component {
                 );
             if (errors.msg.username) alert.error(errors.msg.username.join());
             if(errors.msg.emptyMessage) alert.error(errors.msg.emptyMessage);
-            else if(errors.msg) alert.error(`${errors.status} : ${errors.msg}`);
+            if(errors.msg.genericError) alert.error(`${errors.msg.genericError}`);
         }
         if (messages !== prevProps.messages) {
             if (messages.msg.loginSuccess) {
                 alert.success(messages.msg.loginSuccess);
             }
-            else if(messages.msg) {
-                alert.success(messages.msg);
+            if(messages.msg.genericMessage) {
+                alert.success(messages.msg.genericMessage);
             }
         }
     }

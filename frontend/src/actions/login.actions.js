@@ -6,5 +6,5 @@ export const login = (username, password) => (dispatch) => {
     dispatch({
         type: types.HTTP_CALL_INITIATED,
     });
-    makeHttpCall("/api/auth/login/", body, "logged in successfully", dispatch);
+    makeHttpCall("/api/auth/login/", body, "logged in successfully", types.LOGIN, dispatch);
 };
