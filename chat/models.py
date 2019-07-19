@@ -13,6 +13,8 @@ class BaseModel(models.Model):
 
 class ChatRoom(BaseModel):
     name = models.CharField(_("Name of the room"), max_length=255, primary_key=True)
+    online_users = models.ManyToManyField(USER, related_name="chat_rooms",
+                                          related_query_name="chat_room")
 
     def __str__(self):
         return "%s" % self.name

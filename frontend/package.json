@@ -24,6 +24,7 @@
     "babel-preset-react-app": "^9.0.0",
     "bloomer": "^0.6.5",
     "bulma": "^0.7.5",
+    "bulma-tooltip": "^2.0.2",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "2.1.1",
