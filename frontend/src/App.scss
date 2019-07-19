@@ -1,5 +1,7 @@
 @import "styles/styles";
+
 $primary: $primary;
 $info: $info;
-@import "../node_modules/bulma/sass/utilities/_all";
-@import "../node_modules/bulma/bulma";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/bulma";
+@import "~bulma-tooltip/src/sass/index";

@@ -48,7 +48,7 @@ class Login extends Component {
     };
 
     render() {
-        const isAuthenticated = this.props.state.isAuthenticated;
+        const isAuthenticated = this.props.state.isAuthenticated && this.props.state.currentUser;
         const queryParams = queryString.parse(this.props.location.search);
         const next = queryParams.next;
         return (

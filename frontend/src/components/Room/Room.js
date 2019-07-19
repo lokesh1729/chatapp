@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import {alert} from "../../actions/message.actions";
 import PropTypes from "prop-types";
 
+
 class Room extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +22,7 @@ class Room extends Component {
       chatLog: [],
       message: "",
       roomName: roomName,
+      users: []
     };
   }
   componentDidMount() {
@@ -37,9 +39,32 @@ class Room extends Component {
     socket.onmessage = function receiveMessage(e) {
       // console.log(`message received : ${e.data}`);
       let data = JSON.parse(e.data);
-      self.setState(prevState => ({
-        chatLog: [...prevState.chatLog, data],
-      }));
+      if(data.type === "INITIAL_STATUS") {
+        self.setState({
+          users: data.data
+        });
+      }
+      else if(data.type === "MESSAGE") {
+        self.setState(prevState => ({
+          chatLog: [...prevState.chatLog, data.data],
+        }));
+      }
+      else if(data.type === "ONLINE") {
+        if(data.data.username !== self.props.state.currentUser.username) {
+          let users = self.state.users;
+          users = users.filter((val) => val.username !== data.data.username);
+          users.push(data.data);
+          self.setState({ users });
+        }
+      }
+      else if(data.type === "OFFLINE") {
+        if(data.data.username !== self.props.state.currentUser.username) {
+          let users = self.state.users;
+          users = users.filter((val) => val.username !== data.data.username);
+          self.setState({ users });
+        }
+      }
+
     };
     socket.onerror = err => {
       console.log(`socket connection closed unexcpectedly`);
@@ -104,10 +129,13 @@ class Room extends Component {
               <div className="user_list w-2/12 flex-auto flex flex-col">
                 <span className="has-text-primary text-center">Online Users</span>
                 <ul>
-                  <li className="text-center has-text-primary">user1</li>
-                  <li className="text-center has-text-primary">user2</li>
-                  <li className="text-center has-text-primary">user3</li>
-                  <li className="text-center has-text-primary">user4</li>
+                  {this.state.users.map(user => (
+                    <div key={user.username} className={"flex"}>
+                      <span className={"rounded-full h-3 w-3 mt-2 ml-3 " + (user.status === "ONLINE" ? "bg-red-500": "bg-green-500")} />
+                      <li className="text-center has-text-info tooltip room__name ml-4"
+                              data-tooltip={`Last Seen at ${user.last_seen}`}>{user.username}</li>
+                    </div>
+                  ))}
                 </ul>
               </div>
             </div>

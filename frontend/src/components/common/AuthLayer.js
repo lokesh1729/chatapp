@@ -11,7 +11,7 @@ export default function authRequired(WrappedComponent) {
             cookies: instanceOf(Cookies).isRequired
         };
         render() {
-            const isAuthenticated = this.props.state.isAuthenticated;
+            const isAuthenticated = this.props.state.isAuthenticated && this.props.state.currentUser;
             return (
                 <Fragment>
                     {!isAuthenticated ? (
