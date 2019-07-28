@@ -173,9 +173,7 @@ class P2PConsumer(AsyncJsonWebsocketConsumer):
             print("logged in user: %s" % self.user)
             if isinstance(self.user, AnonymousUser):
                 return self.disconnect(1002)
-            peer_name = self.scope["url_route"]["kwargs"]["peer_name"]
-            self.room_name = "peer_%s" % peer_name
-
+            self.room_name = "inbox"
             # Join room group
             await self.channel_layer.group_add(
                 self.room_name, self.channel_name
@@ -238,7 +236,7 @@ class P2PConsumer(AsyncJsonWebsocketConsumer):
     def get_message_obj(self, message):
         room, _ = ChatRoom.objects.get_or_create(self.room_name)
         room.online_users.add(self.user)
-        participant, _ = Participant.objects.get_or_create(sender=self.user)
+        participant, _ = Participant.objects.get_or_create(user=self.user)
         obj = Message.objects.create(text=message, room=room, sender=participant)
         return obj
 
@@ -247,11 +245,12 @@ class P2PConsumer(AsyncJsonWebsocketConsumer):
             text_data=json.dumps(
                 {
                     "type": "MESSAGE",
+                    "from": event["from"],
+                    "to": event["to"],
                     "data": {
                         "message": event["message"],
                         "key": event["key"],
-                        "from": event["from"],
-                        "to": event["to"]
+                        "username": event["from"]
                     },
                 }
             )
