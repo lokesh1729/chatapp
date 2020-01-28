@@ -1,62 +1,65 @@
 import React, { Component } from "react";
 import axios from "axios";
-import authRequired from "../common/AuthLayer";
 import { Section } from "bloomer/lib/layout/Section";
 import { Container } from "bloomer/lib/layout/Container";
 import { Field } from "bloomer/lib/elements/Form/Field/Field";
+import { TextArea } from "bloomer/lib/elements/Form/TextArea";
 import { Control } from "bloomer/lib/elements/Form/Control";
 import { Button } from "bloomer/lib/elements/Button";
-import "./Room.scss";
-import { TextArea } from "bloomer/lib/elements/Form/TextArea";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { alert } from "../../actions/message.actions";
-import PropTypes from "prop-types";
+import authRequired from "../common/AuthLayer";
 
-class Room extends Component {
+class P2P extends Component {
   constructor(props) {
     super(props);
-    const roomName = this.props.match.params.roomName;
+    const peerName = this.props.match.params.peerName;
     this.state = {
       socket: null,
       chatLog: [],
       message: "",
-      roomName: roomName,
-      users: [],
+      peerName: peerName,
+      peer: {},
     };
   }
+
   componentDidMount() {
     const token = this.props.cookies.get("authToken");
     const protocolPrefix = window.location.protocol === "https:" ? "wss:" : "ws:";
     let { host } = window.location;
-    let socket = new WebSocket(`${protocolPrefix}//${host}/ws/chat/${this.state.roomName}/`);
+    let socket = new WebSocket(`${protocolPrefix}//${host}/ws/p2p/`);
     let self = this;
     socket.onopen = e => {
       console.log("opened connection...");
     };
     socket.onmessage = function receiveMessage(e) {
-      // console.log(`message received : ${e.data}`);
+      console.log(`message received : ${e.data}`);
       let data = JSON.parse(e.data);
-      if (data.type === "INITIAL_STATUS") {
-        self.setState({
-          users: data.data,
-        });
-      } else if (data.type === "MESSAGE") {
+      if (
+        (data.type === "MESSAGE" &&
+          data.from === self.state.peerName &&
+          data.to === self.props.state.currentUser.username) ||
+        (data.type === "MESSAGE" &&
+          data.from === self.props.state.currentUser.username &&
+          data.to === self.state.peerName)
+      ) {
         self.setState(prevState => ({
           chatLog: [...prevState.chatLog, data.data],
         }));
-      } else if (data.type === "ONLINE") {
-        if (data.data.username !== self.props.state.currentUser.username) {
-          let users = self.state.users;
-          users = users.filter(val => val.username !== data.data.username);
-          users.push(data.data);
-          self.setState({ users });
-        }
-      } else if (data.type === "OFFLINE") {
-        if (data.data.username !== self.props.state.currentUser.username) {
-          let users = self.state.users;
-          users = users.filter(val => val.username !== data.data.username);
-          self.setState({ users });
-        }
+      } else if (
+        data.type === "ONLINE" &&
+        data.data.username === self.state.peerName &&
+        data.data.username !== self.props.state.currentUser.username
+      ) {
+        let peer = data.data;
+        self.setState({ peer });
+      } else if (
+        data.type === "OFFLINE" &&
+        data.data.username === self.state.peerName &&
+        data.data.username !== self.props.state.currentUser.username
+      ) {
+        self.setState({ peer: {} });
       }
     };
     socket.onerror = err => {
@@ -68,7 +71,7 @@ class Room extends Component {
     };
     this.setState({ socket });
     axios
-      .get(`/api/message/room/${this.state.roomName}/`, {
+      .get(`/api/message/room/inbox/`, {
         headers: { Authorization: `Token ${token}` },
       })
       .then(res => {
@@ -100,7 +103,10 @@ class Room extends Component {
       return;
     }
     this.state.socket.send(
-      JSON.stringify({ message: this.state.message, room_name: this.state.roomName }),
+      JSON.stringify({
+        message: this.state.message,
+        to: this.state.peerName,
+      }),
     );
     this.setState(_ => ({ message: "" }));
   };
@@ -118,17 +124,14 @@ class Room extends Component {
         <Container className="h-full">
           <div className="flex flex-col h-full">
             <div className="text-3xl text-center p-2 flex-auto room__name w-full border-solid border-2 border-white-500 flex-auto">
-              Room Name : {this.props.match.params.roomName}
+              You are chatting with : {this.state.peerName}
             </div>
             <div className="chat_log__flex flex-auto flex flex-row w-full border-solid border-2 border-t-0 border-white-500 flex-auto">
               <div className="chat_log w-10/12 p-2 border-solid border-r-2 border-white-500 flex-auto flex flex-col overflow-y-scroll">
                 {chatlog.map(message => (
                   <div key={message.key} className="p-1">
                     <span className="message__username has-text-primary">
-                      {message.username === this.props.state.currentUser.username
-                        ? "You"
-                        : message.username}{" "}
-                      :{" "}
+                      {message.username === this.props.state.currentUser.username ? "You" : message.username} :{" "}
                     </span>
                     <span className="message__message break-words">{message.message}</span>
                   </div>
@@ -136,24 +139,22 @@ class Room extends Component {
               </div>
               <div className="user_list w-2/12 flex-auto flex flex-col">
                 <span className="has-text-primary text-center">Online Users</span>
-                <ul>
-                  {this.state.users.map(user => (
-                    <div key={user.username} className={"flex"}>
-                      <span
-                        className={
-                          "rounded-full h-3 w-3 mt-2 ml-3 " +
-                          (user.status === "OFFLINE" ? "bg-red-500" : "bg-green-500")
-                        }
-                      />
-                      <li
-                        className="text-center has-text-info tooltip room__name ml-4"
-                        data-tooltip={`Last Seen at ${user.last_seen}`}
-                      >
-                        {user.username}
-                      </li>
-                    </div>
-                  ))}
-                </ul>
+                {Object.entries(this.state.peer).length > 0 && (
+                  <ul className={"flex"}>
+                    <span
+                      className={
+                        "rounded-full h-3 w-3 mt-2 ml-3 " +
+                        (this.state.peer.status === "OFFLINE" ? "bg-red-500" : "bg-green-500")
+                      }
+                    />
+                    <li
+                      className="text-center has-text-info tooltip room__name ml-4"
+                      data-tooltip={`Last Seen at ${this.state.peer.last_seen}`}
+                    >
+                      {this.state.peer.username}
+                    </li>
+                  </ul>
+                )}
               </div>
             </div>
             <Container className="mt-4">
@@ -187,11 +188,11 @@ class Room extends Component {
   }
 }
 
-Room.propTypes = {
+P2P.propTypes = {
   alert: PropTypes.func.isRequired,
 };
 
 export default connect(
   null,
   { alert },
-)(authRequired(Room));
+)(authRequired(P2P));

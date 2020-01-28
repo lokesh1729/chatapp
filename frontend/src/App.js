@@ -14,6 +14,7 @@ import RoomEnter from "./components/RoomEnter/RoomEnter";
 import Room from "./components/Room/Room";
 import {BASE_NAME} from "./constants";
 import Signup from "./components/Signup/signup";
+import P2P from "./components/P2P/p2p";
 
 const options = {
     // you can also just use 'bottom center'
@@ -53,6 +54,15 @@ const WrappedRoom = (props) => {
   )
 };
 
+const WrappedP2P = (props) => {
+  return (
+    <Fragment>
+      <Alerts />
+      <P2P {...props} />
+    </Fragment>
+  )
+};
+
 class App extends Component {
     render() {
         return (
@@ -62,10 +72,11 @@ class App extends Component {
                       <BrowserRouter basename={BASE_NAME}>
                           <Switch>
                               <Route path={"/"} exact component={Home} />
-                              <Route path={"/login"} component={WrappedLogin} />
-                              <Route path={"/room"} exact component={RoomEnter} />
-                              <Route path={"/room/:roomName"} component={WrappedRoom} />
-                              <Route path={"/signup"} component={WrappedSignup} />
+                            <Route path={"/signup"} component={WrappedSignup} />
+                            <Route path={"/login"} component={WrappedLogin} />
+                            <Route path={"/room"} exact component={RoomEnter} />
+                            <Route path={"/room/:roomName"} component={WrappedRoom} />
+                            <Route path={"/p2p/:peerName"} component={WrappedP2P} />
                           </Switch>
                       </BrowserRouter>
                   </AlertProvider>
