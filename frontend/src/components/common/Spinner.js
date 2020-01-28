@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import spinner from "./spinner.gif";
 
 class Spinner extends Component {
     render() {
@@ -8,7 +9,7 @@ class Spinner extends Component {
             <Fragment>
                 {this.props.isLoading && (
                     <div className="spinner">
-                        <img src="assets/spinner.gif" alt="loading" />
+                        <img src={spinner} alt="loading" />
                     </div>
                 )}
             </Fragment>

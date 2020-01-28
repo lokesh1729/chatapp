@@ -188,8 +188,4 @@ function copyPublicFolder() {
     dereference: true,
     filter: file => file !== paths.appHtml && file !== paths.appDevHtml,
   });
-  fs.copySync(paths.appPublic, paths.appStaticBuild, {
-    dereference: true,
-    filter: file => file !== paths.appHtml && file !== paths.appDevHtml,
-  })
 }
